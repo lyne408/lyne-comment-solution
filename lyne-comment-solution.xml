@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!-- 
+
+1. tag 参考来源
+
+ JSDoc 2020-12-11
+ TSDoc 2020-12-11
+ C# XML documentation comments 2020-12-11
+2. 设计原则
+
+	2.1 尽可能减少篇幅占用(减少字符数)
+	
+		- 可使用缩写
+			如 <constant /> 缩写为 <const />
+			
+		- 优先将非描述性的内容设计为属性, 尽可能将描述性的内容设计为 字符串子节点(相当于 DOM 的 element.innerText),如不写描述, 则可用空元素语法
+		
+		- 优先不使用数组型 tag, 除非该数组型 tag 相当于 namespace
+			当其下的子元素类型较多, 不使用这个数组型 tag 做命名空间导致更多的字符串产生
+	
+	2.2 多语言习惯兼容
+	
+		如 <abstract /> 与 <virtual /> 用途一样
+		
+	2.3 
+ -->
+
+
+
+<!--		{1}	-->
+<lyneCommentDocs>
+
+	<!--************************ <start>public usage elements</start> ****************************-->
+	<!-- {0, n} 可有多个作者 -->
+	<author>lyne408</author>
+	<!-- {0, n} 如 Qt 多开源协议-->
+	<license>MIT</license>
+	<!-- {0, n} -->
+	<summary>simple description</summary>
+	<!-- {0, n} -->
+	<description>description</description>
+	<desc>description</desc>
+	<!-- {0, 1} -->
+	<date>time</date>
+	<!-- 变更,  {0, n} -->
+	<changelog>
+		<date>date</date>
+		<version>version</version>
+		<summary>simple description</summary>
+		<detail>detail description</detail>
+	</changelog>
+	<changelog>
+		<date>date</date>
+		<version>version</version>
+		<summary>simple description</summary>
+		<detail>detail description</detail>
+	</changelog>
+	<!-- {0, n} -->
+	<see>see</see>
+	
+	<version>version</version>
+	<alpha />
+	<beta />
+	<!-- 同 <beta /> -->
+	<experimental />
+	
+	<since>When was this feature added?</since>
+	
+	<constant />
+	<const />
+	<readonly />
+	
+	<!-- 比如一个函数, 使用不同的参数可以实现不同的功能, 对于一些常用的功能, 可以简单示例一下 -->
+	<example>
+		<satement>
+			执行的语句
+		</satement>
+		<result>
+			执行结果
+		</result>
+	</example>
+	
+	<copyright />
+	
+	<!-- 内部文档 -->
+	<inner />
+	<!-- 同 inner 元素 -->
+	<internal />
+
+	<!-- 
+	不建议使用, 因为字符串节点应该是描述.
+	这种方式也不简洁
+	<necessity>optional</necessity>
+	<necessity>required</necessity>
+	-->
+	<necessity optional type="boolean" defaultValue="false" />
+	<necessity required />
+
+	<!--************************ <end>public usage elements</end>  ****************************-->
+
+
+<!--************************ <start>enum  usage</start> ****************************-->
+<enum type="" />
+<!--************************ <end>enum usage</end>  ****************************-->
+
+	<!--************************ <start>class usage</start> ****************************-->
+	<external />
+	<abstract />
+ 	<class name="ModManagerTwo" hasPublicConstructor="true" external >
+		<!--
+		 {0, n}
+		 -->
+		<property name="profileNames" type="[object, null]">
+			<type type="number">
+<!--				也可以单个类型依赖，似乎用不到 -->
+				<dependencies>
+					<property name="installationDirectory" />
+					<method name="getAllModsSorted" parameterQueue="[string,Array,object]"/>
+					<!-- method 与 function 是一个意思，不同语言习惯不同 -->
+					<function name="getAllModsSorted" parameterQueue="[string,Array,number]"/>
+				</dependencies>
+				<value value="123">描述</value>
+			</type>
+			<type  type="null">
+				描述
+			</type>
+<!--
+表示运行前需正确获取依赖属性的值 和 正确执行依赖的方法
+可以所有满足类型都依赖
+-->
+			<dependencies>
+				<property name="installationDirectory" />
+				<method name="getAllModsSorted" parameterQueue="[string,Array,object]"/>
+			</dependencies>
+		</property>
+
+		
+		<method name="getAllModsSorted" parameterQueue="[string,Array,object]">
+		<!-- Indicate that a symbol overrides its parent. -->
+		<override />
+			<dependencies>
+				<property name="installationDirectory" />
+				<method name="getAllMods" parameterQueue="[string,Array,object]"/>
+			</dependencies>
+		</method>
+
+		<function name="getAllModsSorted" parameterQueue="[string,Array,object]">
+		</function>
+	</class>
+	<!--************************ <end>class usage</end>  ****************************-->
+
+	<!--************************ <start>constructor usage</start> ****************************-->
+	<constructor name="ModManagerTwo" isPublic="true">
+
+	</constructor>
+	<!--************************ <end>constructor usage</end>  ****************************-->
+
+
+	<!--************************ <start>function usage</start> ****************************-->
+	<sealed />
+	<protected />
+	
+	<public />
+	
+	<private />
+	
+	<abstract />
+	<virtual />
+	
+	<method name="">
+	<!--...-->
+	</method>
+	<function name="">
+		<!-- {0, n} -->
+		<parameter name="array" type="Array" necessity="optional" defaultValue=""/>
+
+		<!-- {0, n} 有些语言文档注释习惯采用 exception 表示可能产生的异常 -->
+		<exception type="java.io.IOException">
+			描述
+		</exception>
+
+		<!-- {0, n} 有些语言文档注释习惯采用 throws 表示可能产生的异常 -->
+		<throws type="java.io.IOException">
+			描述
+		</throws>
+
+		<!-- {0, n} 有些语言文档注释习惯采用 error 表示可能产生的异常 -->
+		<error type="java.io.IOException">
+			描述
+		</error>
+
+		<!--
+		{0, n}
+		0 个表示没有返回值.
+		多个时表示该方法有多个不同类型的返回值, 此时, 强制要求 <condition> 子元素
+		-->
+		<returnValue type="number">
+			<!-- 什么条件下得到什么值 -->
+			<!--		{0, n}-->
+			<value value="300">
+				重定向
+				<!--			描述信息， 就不强制要求 <condition>  元素了-->
+				<!--			<condition>重定向</condition>-->
+			</value>
+			<value value="403">服务器拒绝</value>
+		</returnValue>
+
+		<returnValue type="string">
+			<!-- 多个 returnValue 时, 强制要求 <condition>  元素 -->
+			<condition>返回描述信息时</condition>
+			<!--
+			也可用 JavaScript 模板字符串语法, 进而尽可能让注释信息变为属性以缩短篇幅
+			可用 C# 不转义语法,
+			但是 不符合 XML 语法
+
+			 老老实实用 <![CDATA[ <<红楼梦>> &<<水浒传>> ]]>
+			 -->
+			<!--				进而尽可能让非描述性信息变为属性以缩短篇幅, 从设计而言, 描述性信息应该被设计 字符串节点-->
+			<value value="重定向">重定向</value>
+			<value value="服务器拒绝">服务器拒绝</value>
+		</returnValue>
+		
+		<!-- defaultParameters 实在没有必要, 看起来眼睛也不是很舒适 -->
+		<!--
+		<defaultParameters>
+			<parameter name="dir" type="string" value="<required>"/>
+			<parameter name="isGetFiles" type="boolean" value="true"/>
+			<parameter name="isGetDirectories" type="boolean" value="false"/>
+		</defaultParameters>
+		-->
+		
+	</function>
+
+
+
+	<!--************************ <end>function usage</end>  ****************************-->
+
+
+	<!--************************ <start>parameter usage</start> ****************************-->
+	<parameter isObjectLike="true">
+		<!--		{0, n}-->
+		<parameterDependencies mode="all">
+			<!--
+			{0, n}
+			属性 name 必须
+			属性 type 是考虑到联合类型的情况, 不设置时表示任意满足的类型
+			属性 value 不设置则表示任意值
+			-->
+			<parameter name="isGetFiles" type="" value="true"/>
+			<parameter name="isGetDirectories" type="" value="true"/>
+		</parameterDependencies>
+		<parameterDependencies mode="oneOf">
+			<parameter name="isGetFiles" type="" value="true"/>
+			<parameter name="isGetDirectories" type="" value="true"/>
+		</parameterDependencies>
+		<parameterDependencies mode="anyOf">
+			<parameter name="isGetFiles" type="" value="true"/>
+			<parameter name="isGetDirectories" type="" value="true"/>
+			<!-- 在描述里引用变量 还是使用 ${variable} 语法, 便于生成文档时高亮 -->
+			<description>${isGetDirectories} 或 ${isGetFiles} 或 both, 但都必须为 true</description>
+		</parameterDependencies>
+	</parameter>
+	<!--************************ <end>parameter usage</end>  ****************************-->
+
+
+	<!--************************ <start>property of object ilke parameter usage</start> ****************************-->
+	<parameter isObjectLike="true">
+		<!--
+		{0, n}
+		defaultValue 是函数参数层级的属性, 不是类型的. 单独定义类型时, 不应该该类型的文档定义中指定 defaultValue.
+		-->
+		<property type="string" necessity="required" defaultValue=""/>
+		<property type="Array" necessity="optional"/>
+
+		<!-- 只有一两三个 **全部** 依赖属性, 可以使用 propertyDependency, 占的行数少了 -->
+		<propertyDependency name="isGetFiles" value="true" />
+		<!--
+		{0, n}
+		只有一个就不需要属性 mode
+		-->
+		<propertyDependencies>
+			<condition value="true" />
+	 		<property name="isSortAllProfiles"  value="false">需要单独的描述就是空元素了</property>
+	  </propertyDependencies>
+		<propertyDependencies mode="all">
+			<!-- {0, n}-->
+			<property name="isGetFiles" type="" value="true"/>
+			<property name="isGetDirectories" type="" value="true"/>
+		</propertyDependencies>
+		<propertyDependencies mode="oneOf">
+			<property name="isGetFiles" type="" value="true"/>
+			<property name="isGetDirectories" type="" value="true"/>
+		</propertyDependencies>
+		<propertyDependencies mode="anyOf">
+			<property name="isGetFiles" type="" value="true"/>
+			<property name="isGetDirectories" type="" value="true"/>
+		</propertyDependencies>
+		
+		<ignoreProperties>
+			<!-- 
+			<condition value="" /> 
+			不写描述, 就是空元素.
+			写描述, 就写成其子字符串.
+			语义上将用 state 也可以
+			-->
+			<condition type="" value="">描述</condition>
+			<property name="isOnlySortSelectedProfile" />
+		</ignoreProperties>
+		
+		
+	</parameter>
+	<!--************************ <end>property of object ilke parameter usage</end>  ****************************-->
+<!--************************ <start>module usage</start> ****************************-->
+	<!--    比如 var 声明的变量可能需要 type 元素-->
+	<export></export>
+	<import></import>
+<!--************************ <end>module usage</end>  ****************************-->
+
+
+<!--************************ <start>variable usage</start> ****************************-->
+	<!--    比如 var 声明的变量可能需要 type 元素-->
+	<type>Array</type>
+	
+	<typedef type="">
+		<property name="isGetDirectories" type="" value="true"/>
+		<property name="isGetDirectories" type="" value="true"/>
+		<property name="isGetDirectories" type="" value="true"/>
+	</typedef>	
+<!--************************ <end>variable usage</end>  ****************************-->
+
+
+<!--************************ <start>type usage</start> ****************************-->
+<!-- TypeScript 里经常把函数的参数类型, 返回值类型单独提出来的情况 -->
+<parameterType function="createDirectory" />
+<functionalParameterType function="createDirectory" />
+<returnValueType function="createDirectory" />
+<functionalReturnValueType function="createDirectory" />
+<!--************************ <end>type usage</end>  ****************************-->
+
+	<!--************************ <start>public usage attributes</start> ****************************-->
+
+	<parameter isDeprecated="true"/>
+	<parameter isDeprecated="false"/>
+	<parameter deprecated />
+	<!--************************ <end>public usage attributes</end>  ****************************-->
+
+	<!-- 表示参数值为何的描述. 如描述参数 isGetAbsolutePath -->
+	<if value="true">
+		these returned files or directories or both is the absolute path not these names
+	</if>
+	
+	<literal />
+	
+	<code>code</code>
+	<c>code</c>
+	<!-- 
+	如 JavaScript, 为了语义和照顾不同语言开发者的习惯, 一个函数提供多个同名.
+	<recommendName /> 表示推荐使用某个名
+	
+	export let getFileName = getFileNameWithoutExtension
+	
+	<recommendName />
+	export let getFullFilename = getFileNameWithExtension
+	-->
+	<recommendName />
+	<recommendIdentifier />
+	<recommendName language="JavaScript">
+		因为 JavaScript 里判断字符串包含子串用 String.prototype.includes()
+	</recommendName>
+	
+	<synonym name="" />
+	<same name="">
+	
+	<!-- design 也是名词, 不是 designment, designment 被识别别拼写错误 -->
+	<design>
+	为什么这样设计.
+	</design>
+</lyneCommentDocs>
