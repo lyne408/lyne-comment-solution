@@ -63,8 +63,8 @@ export type FilterFilesAndDirectoriesParameter = {
 	 * <necessity optional />
 	 *
 	 * <propertyDependencies mode="anyOf">
-	 *  <propertyDependency name="isGetFiles" value="true" />
-	 *  <propertyDependency name="isGetDirectories" value="true" />
+	 *  <property name="isGetFiles" value="true" />
+	 *  <property name="isGetDirectories" value="true" />
 	 * </propertyDependencies>
 	 */
 	inclusions?: Array<string>
