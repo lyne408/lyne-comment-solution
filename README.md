@@ -5,8 +5,6 @@ Now just write Chinese user guide.
 Personal documentation comments and normal comments standard, WIP.
 En, solution is personal standard.
 
-
-
 个人所用文档注释和普通注释规范, WIP.
 
 ## Project Background
